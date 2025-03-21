@@ -12,8 +12,8 @@ def create_app():
     app = Flask(__name__)
     app.config['SECRET_KEY'] = 'SOFSEC SOFSEC'
     db_url = os.environ.get('DATABASE_URL', f'sqlite:///{DB_NAME}')
-    if '__COLON__' in db_url:
-        db_url = db_url.replace('__COLON__', ':').replace('__AT__', '@').replace('__SLASH__', '/')
+    if db_url.startswith('postgres://'):
+        db_url = db_url.replace('postgres://', 'postgresql://')
     app.config['SQLALCHEMY_DATABASE_URI'] = db_url
     db.init_app(app)
 
